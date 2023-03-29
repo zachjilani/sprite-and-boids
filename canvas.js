@@ -2,3 +2,11 @@ var canvas = document.querySelector('canvas');
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+
+
+function animate() {
+  requestAnimationFrame(animate);
+  console.log("animating:");
+}
+
+//animate();

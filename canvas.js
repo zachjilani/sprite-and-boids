@@ -1,5 +1,6 @@
 var canvas = document.querySelector('canvas');
 
+
 var init_size = true;
 // window.addEventListener('resize', resizeCanvas, false);
 // function resizeCanvas() {
@@ -21,7 +22,15 @@ var x = 10;
 var xdis = 10;
 var last_animation_time = new Date().getTime();
 var time_delta = 50;
+var jsondata;
 
+$.getJSON( "animationData.json", function(data) {
+  console.log(data);
+  console.log(data);
+  jsondata = data;
+});
+
+console.log(jsondata);
 //declare class for sprite where it has a draw
 
 

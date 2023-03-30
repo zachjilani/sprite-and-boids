@@ -35,6 +35,7 @@ function animate() {
     x = 10;
   }
   x = x + xdis;
+  context.clearRect(0, 0, canvas.width, canvas.height)
   context.drawImage(img, x, 10, 100, 200);
 }
 

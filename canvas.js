@@ -15,23 +15,32 @@ var init_size = true;
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 img = new Image();
-img.src = '0.png';
+// img.src = '0.png';
+
 
 var context = canvas.getContext('2d');
 var x = 10;
 var xdis = 10;
 var last_animation_time = new Date().getTime();
-var time_delta = 50;
-var jsondata;
+var time_delta = 99;
+var i = 0;
 
-$.getJSON( "animationData.json", function(data) {
-  console.log(data);
-  console.log(data);
-  jsondata = data;
-});
 
-console.log(jsondata);
-//declare class for sprite where it has a draw
+
+var jsondata = $.ajax({
+  url: 'animationData.json',
+  async: false,
+  dataType: 'json'
+}).responseJSON;
+
+
+
+jsondata = jsondata["TenderBud"];
+
+console.log(jsondata['idle'].length)
+
+
+
 
 
 function animate() {
@@ -40,12 +49,13 @@ function animate() {
     return;
   }
   last_animation_time = new Date().getTime();
-  if(x > window.innerWidth) {
-    x = 10;
+  if(i > jsondata['idle'].length - 1){
+    i = 0;
   }
-  x = x + xdis;
-  context.clearRect(0, 0, canvas.width, canvas.height)
-  context.drawImage(img, x, 10, 100, 200);
+  img.src = 'Penguins/idle/' + String(i) + '.png';
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.drawImage(img, x, 10, 100, 100);
+  i++;
 }
 
 animate();

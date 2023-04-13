@@ -69,5 +69,9 @@ function KeyPress(key) {
     case 65:
       dir = 'walk_W';
       break;
+    default:
+    //randomidleanim
+      dir = 'none'
+      break;
   }
 }

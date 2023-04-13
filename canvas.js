@@ -24,6 +24,7 @@ var xdis = 10;
 var last_animation_time = new Date().getTime();
 var time_delta = 99;
 var i = 0;
+var idle = 'idle'
 
 
 
@@ -40,7 +41,8 @@ Array.prototype.random = function() {
 jsondata = jsondata["TenderBud"];
 
 console.log(jsondata['idle'].length);
-console.log(jsondata['idle'][1]['w']);
+var rand = randomIdle();
+console.log(rand);
 
 function randomIdle() {
   idleArr = [
@@ -63,17 +65,17 @@ function randomIdle() {
 
 function animate() {
   requestAnimationFrame(animate);
-  idle = randomIdle();
   if((time_delta+last_animation_time) > new Date().getTime()) {
     return;
   }
   last_animation_time = new Date().getTime();
-  if(i > jsondata[idle].length - 1){
+  if(i > jsondata[rand].length - 1){
     i = 0;
   }
-  img.src = 'Penguins/' + idle + '/' + String(i) + '.png';
+  //need to move this into Penguin class
+  img.src = 'Penguins/' + rand + '/' + String(i) + '.png';
   context.clearRect(0, 0, canvas.width, canvas.height);
-  context.drawImage(img, x, 10, jsondata[idle][i]['w'], jsondata[idle][i]['h']);
+  context.drawImage(img, x, 10, jsondata[rand][i]['w'], jsondata[rand][i]['h']);
   i++;
 }
 

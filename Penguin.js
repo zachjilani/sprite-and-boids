@@ -8,7 +8,6 @@ var dir;
 Array.prototype.random = function() {
   return this[Math.floor((Math.random()*this.length))];
 }
-
 class Penguin {
   constructor(width, height, x, y) {
     this.width = width;
@@ -17,20 +16,7 @@ class Penguin {
     this.y = y;
     img = new Image();
   }
-
-  animate() {
-    requestAnimationFrame(animate);
-    if((time_delta+last_animation_time) > new Date().getTime()) {
-      return;
-    }
-    last_animation_time = new Date().getTime();
-    if(x > window.innerWidth) {
-      x = 10;
-    }
-    x = x + xdis;
-    context.clearRect(0, 0, canvas.width, canvas.height)
-    context.drawImage(img, x, 10, 100, 200);
-  }
+  //maybe need an img src method?
 
   randomIdle() {
     idleArr = [
@@ -75,3 +61,21 @@ function KeyPress(key) {
       break;
   }
 }
+
+function animate() {
+  requestAnimationFrame(animate);
+  if((time_delta+last_animation_time) > new Date().getTime()) {
+    return;
+  }
+  last_animation_time = new Date().getTime();
+  if(i > jsondata[rand].length - 1){
+    i = 0;
+  }
+  //need to move this into Penguin class
+  img.src = 'Penguins/' + rand + '/' + String(i) + '.png';
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.drawImage(img, x, 10, jsondata[rand][i]['w'], jsondata[rand][i]['h']);
+  i++;
+}
+
+animate();

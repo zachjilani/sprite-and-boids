@@ -1,13 +1,47 @@
 class Penguin {//may change the constructor here, im unsure.
-  constructor(width=0, height=0, x=0, y=0, image) {
-    this.width = width;
-    this.height = height;
-    this.x = x;
-    this.y = y;
-    this.image = image;
+  constructor(xPos, yPos, distance, data, time_delta) {
+    this.xPos = xPos;
+    this.yPos = yPos;
+    this.xDis = distance;
+    this.yDis = distance;
+    this.data = data;
+    this.time_delta - time_delta;
+    this.image = new Image();
   }
   setImg(anim, frame) {
     image.src = 'Penguins/' + anim + '/' + String(frame) + '.png';
+  }
+
+  setPosition(x, y) {
+    this.xPos = x;
+    this.yPos = y;
+  }
+
+  setDistance(x, y) {
+    this.xDis = x;
+    this.yDis = y;
+  }
+
+  setDelta(delta) {
+    this.time_delta = delta;
+  }
+
+  randomIdle() {
+    idleArr = [
+      "idle",
+      "idleBackAndForth",
+      "idleBreathing",
+      "idleFall",
+      "idleLayDown",
+      "idleLookAround",
+      "idleLookDown",
+      "idleLookLeft",
+      "idleLookUp",
+      "idleSit",
+      "idleSpin",
+      "idleWave"
+    ]
+    return idleArr[Math.floor(Math.random()*idleArr.length)];
   }
 }
 
@@ -15,7 +49,6 @@ var canvas = document.querySelector('canvas');
 window.addEventListener('keydown', KeyPress, false);
 window.addEventListener('keyup', function(e){
   anim = randomIdle();
-  console.log("key up");
 })
 
 canvas.width = window.innerWidth;
@@ -26,12 +59,12 @@ img = new Image();
 
 
 var context = canvas.getContext('2d');
-var x = 10;
-var y = 10;
-var xdis = 5;
-var ydis = 5;
+var x = 50;
+var y = 50;
+var xdis = 10;
+var ydis = 10;
 var last_animation_time = new Date().getTime();
-var time_delta = 99;
+var time_delta = 80;
 var i = 0;
 var jsondata = $.ajax({
   url: 'animationData.json',

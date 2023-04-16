@@ -1,15 +1,15 @@
 class Penguin {
-  constructor(xPos, yPos, distance, data, time_delta) {
+  constructor(xPos, yPos, distance, time_delta, data) {
     this.xPos = xPos;
     this.yPos = yPos;
     this.xDis = distance;
     this.yDis = distance;
     this.data = data;
-    this.time_delta - time_delta;
+    this.time_delta = time_delta;
     this.image = new Image();
   }
   setImg(anim, frame) {
-    image.src = 'Penguins/' + anim + '/' + String(frame) + '.png';
+    this.image.src = 'Penguins/' + anim + '/' + String(frame) + '.png';
   }
 
   setPosition(x, y) {
@@ -45,54 +45,64 @@ class Penguin {
   }
 }//end of Penguin Class
 
-var canvas = document.querySelector('canvas');
+var p = new Penguin(
+  xPos = 50,
+  yPos = 50,
+  distance = 10,
+  time_delta = 80,
+  data = $.ajax({
+    url: 'animationData.json',
+    async: false,
+    dataType: 'json'
+  }).responseJSON["TenderBud"]
+);
+
+const canvas = document.querySelector('canvas');
 window.addEventListener('keydown', KeyPress, false);
 window.addEventListener('keyup', function(e){
   anim = randomIdle();
 })
-
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 img = new Image();
-//var p = new Penguin(new Image());
 
 
-
-var context = canvas.getContext('2d');
-var x = 50;
-var y = 50;
-var xdis = 10;
-var ydis = 10;
+const context = canvas.getContext('2d');
+// var x = 50;
+// var y = 50;
+// var xdis = 10;
+// var ydis = 10;
 var last_animation_time = new Date().getTime();
-var time_delta = 80;
+// var time_delta = 80;
 var i = 0;
-var jsondata = $.ajax({
-  url: 'animationData.json',
-  async: false,
-  dataType: 'json'
-}).responseJSON;
-jsondata = jsondata["TenderBud"];
+// var jsondata = $.ajax({
+//   url: 'animationData.json',
+//   async: false,
+//   dataType: 'json'
+// }).responseJSON["TenderBud"];
+//jsondata = jsondata["TenderBud"];
 
-var anim = randomIdle();
-console.log(anim);
+//var anim = randomIdle();
+console.log(p.setImg());
+console.log(p.image);
 
-function randomIdle() {
-  idleArr = [
-    "idle",
-    "idleBackAndForth",
-    "idleBreathing",
-    "idleFall",
-    "idleLayDown",
-    "idleLookAround",
-    "idleLookDown",
-    "idleLookLeft",
-    "idleLookUp",
-    "idleSit",
-    "idleSpin",
-    "idleWave"
-  ]
-  return idleArr[Math.floor(Math.random()*idleArr.length)];
-}
+// function randomIdle() {
+//   idleArr = [
+//     "idle",
+//     "idleBackAndForth",
+//     "idleBreathing",
+//     "idleFall",
+//     "idleLayDown",
+//     "idleLookAround",
+//     "idleLookDown",
+//     "idleLookLeft",
+//     "idleLookUp",
+//     "idleSit",
+//     "idleSpin",
+//     "idleWave"
+//   ]
+//   return idleArr[Math.floor(Math.random()*idleArr.length)];
+// }
 
 function KeyPress(key) {
   switch(key.keyCode){
@@ -137,4 +147,4 @@ function animate() {
   i++;
 }
 
-animate();
+//animate();

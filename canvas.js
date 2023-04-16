@@ -1,4 +1,4 @@
-class Penguin {//may change the constructor here, im unsure.
+class Penguin {
   constructor(xPos, yPos, distance, data, time_delta) {
     this.xPos = xPos;
     this.yPos = yPos;
@@ -43,7 +43,7 @@ class Penguin {//may change the constructor here, im unsure.
     ]
     return idleArr[Math.floor(Math.random()*idleArr.length)];
   }
-}
+}//end of Penguin Class
 
 var canvas = document.querySelector('canvas');
 window.addEventListener('keydown', KeyPress, false);

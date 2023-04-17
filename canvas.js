@@ -25,14 +25,17 @@ class Penguin {
 var img = new Image();
 var last_animation_time = new Date().getTime();
 var i = 0;
-//also tried this inside penguin class but kept running into errors.
-//i assume due to having a sync function before creating the object.
+
+/*
+also tried this inside penguin class but kept running into errors.
+i assume due to having a sync function before creating the object.
+*/
 var jsondata = $.ajax({
   url: 'animationData.json',
   async: false,
   dataType: 'json'
 }).responseJSON["TenderBud"];
-const context = document.querySelector('canvas').getContext('2d');
+const context = document.querySelector('canvas').getContext('2d', {alpha:false});
 window.addEventListener('keydown', KeyPress, false);
 window.addEventListener('keyup', function(e){
   p.setAnimation(randomIdle());
@@ -45,8 +48,13 @@ var p = new Penguin(
   distance = 10,
   time_delta = 99
 );
-//had this in penguin class at one point but felt like it ran slower when
-//it was in the class function.
+
+/*
+had this in penguin class at one point but felt like it ran slower when
+it was in the class function. The screen flash i found is caused by this
+randomly picked idle. I could remove it and change it to have only one
+idle, but that would be boring.
+*/
 function randomIdle() {
   var idleArr = [
     "idle",
@@ -64,7 +72,6 @@ function randomIdle() {
   ]
   return idleArr[Math.floor(Math.random()*idleArr.length)];
 }
-
 function KeyPress(key) {
   switch(key.keyCode){
     //N

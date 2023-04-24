@@ -5,7 +5,27 @@ class Penguin {
     this.distance = distance;
     this.time_delta = time_delta;
     this.animation = 'idle';
+    //for later use possibly
+    //this.velocity = [1,1];
+
+    this.context = context;
   }
+
+  draw() {
+    requestAnimationFrame(animate);
+    if((p.time_delta+last_animation_time) > new Date().getTime()) {
+      return;
+    }
+    last_animation_time = new Date().getTime();
+    if(i > jsondata[p.animation].length - 1){
+      i = 0;
+    }
+    img.src = 'Penguins/' + p.animation + '/' + String(i) + '.png';
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(img, p.xPos, p.yPos, jsondata[p.animation][i]['w'], jsondata[p.animation][i]['h']);
+    i++;
+  }
+
   setAnimation(anim) {
     this.animation = anim;
   }
@@ -48,6 +68,8 @@ var p = new Penguin(
   distance = 10,
   time_delta = 99
 );
+
+var sprites = [p];
 
 /*
 had this in penguin class at one point but felt like it ran slower when
@@ -99,18 +121,36 @@ function KeyPress(key) {
   }
 }
 
+// function animate() {
+//   requestAnimationFrame(animate);
+//   if((p.time_delta+last_animation_time) > new Date().getTime()) {
+//     return;
+//   }
+//   last_animation_time = new Date().getTime();
+//   if(i > jsondata[p.animation].length - 1){
+//     i = 0;
+//   }
+//   img.src = 'Penguins/' + p.animation + '/' + String(i) + '.png';
+//   context.clearRect(0, 0, canvas.width, canvas.height);
+//   context.drawImage(img, p.xPos, p.yPos, jsondata[p.animation][i]['w'], jsondata[p.animation][i]['h']);
+//   i++;
+// }
+
 function animate() {
   requestAnimationFrame(animate);
-  if((p.time_delta+last_animation_time) > new Date().getTime()) {
-    return;
+  for(let s of sprites) {
+    s.draw();
   }
-  last_animation_time = new Date().getTime();
-  if(i > jsondata[p.animation].length - 1){
-    i = 0;
-  }
-  img.src = 'Penguins/' + p.animation + '/' + String(i) + '.png';
-  context.clearRect(0, 0, canvas.width, canvas.height);
-  context.drawImage(img, p.xPos, p.yPos, jsondata[p.animation][i]['w'], jsondata[p.animation][i]['h']);
-  i++;
+  // if((p.time_delta+last_animation_time) > new Date().getTime()) {
+  //   return;
+  // }
+  // last_animation_time = new Date().getTime();
+  // if(i > jsondata[p.animation].length - 1){
+  //   i = 0;
+  // }
+  // img.src = 'Penguins/' + p.animation + '/' + String(i) + '.png';
+  // context.clearRect(0, 0, canvas.width, canvas.height);
+  // context.drawImage(img, p.xPos, p.yPos, jsondata[p.animation][i]['w'], jsondata[p.animation][i]['h']);
+  // i++;
 }
 animate();

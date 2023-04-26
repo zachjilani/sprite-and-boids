@@ -5,6 +5,12 @@ class Penguin {
     this.distance = distance;
     this.time_delta = time_delta;
     this.animation = 'idle';
+
+
+    // this.last_animation_time = new Date().getTime();
+    // this.backgroundImage = null;
+    // this.context = context;
+    // this.velocity = [1, 1];
   }
   setAnimation(anim) {
     this.animation = anim;
@@ -19,6 +25,47 @@ class Penguin {
   setDelta(delta) {
     this.time_delta = delta;
   }
+
+  addVector(vec_a, vec_b) {
+    //hardcoded diag for now, later call addVector for movement
+    vec_a[0] = vec_a[0] + vec_b[0];
+    vec_a[1] = vec_a[1] + vec_b[1];
+  }
+
+  draw() {
+    var cur_time = new Date().getTime();
+    if((this.time_delta + this.last_animation_time) > new Date().getTime()) {
+      return;
+    }
+    if(this.backgroundImage != null) {
+      this.context.putImageData(this.backgroundImage, this.xPos, this.yPos)
+    }
+    requestAnimationFrame(animate);
+    // if((p.time_delta+last_animation_time) > new Date().getTime()) {
+    //   return;
+    // }
+    //last_animation_time = new Date().getTime();
+    //this needs to be redone based on class
+    if(i > jsondata[p.animation].length - 1){
+      i = 0;
+    }
+    img.src = 'Penguins/' + p.animation + '/' + String(i) + '.png';
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(img, p.xPos, p.yPos, jsondata[p.animation][i]['w'], jsondata[p.animation][i]['h']);
+    i++;
+
+    // if(this.velocity[0] == 0 || this.velocity[1] == 0) {
+    //   return;
+    // }
+    // if(this.xPos < 0
+    //   || this.yPos < 0
+    //   || this.xPos > canvas.width
+    //   || this.yPos > canvas.height) {
+    //     this.velocity = [0, 0];
+    //     return;
+    // }
+  }
+
 }//end of Penguin Class
 
 
@@ -55,6 +102,7 @@ it was in the class function. The screen flash i found is caused by this
 randomly picked idle. I could remove it and change it to have only one
 idle, but that would be boring.
 */
+//remove this tbh
 function randomIdle() {
   var idleArr = [
     "idle",
@@ -98,7 +146,7 @@ function KeyPress(key) {
       break;
   }
 }
-
+var penguins = [p];
 function animate() {
   requestAnimationFrame(animate);
   if((p.time_delta+last_animation_time) > new Date().getTime()) {
@@ -112,5 +160,8 @@ function animate() {
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.drawImage(img, p.xPos, p.yPos, jsondata[p.animation][i]['w'], jsondata[p.animation][i]['h']);
   i++;
+  // for(let p of penguins) {
+  //   p.draw();
+  // }
 }
 animate();

@@ -4,11 +4,13 @@ class Penguin {
     this.yPos = yPos;
     this.distance = distance;
     this.time_delta = time_delta;
-    this.animation = 'idle';
+    this.animation = 'idleWave';
     this.data = data
+    this.img = new Image();
+    this.index = 0;
 
 
-    // this.last_animation_time = new Date().getTime();
+    this.last_animation_time = new Date().getTime();
     // this.backgroundImage = null;
     // this.context = context;
     // this.velocity = [1, 1];
@@ -34,26 +36,23 @@ class Penguin {
   }
 
   draw() {
-    var cur_time = new Date().getTime();
     if((this.time_delta + this.last_animation_time) > new Date().getTime()) {
       return;
     }
-    if(this.backgroundImage != null) {
-      this.context.putImageData(this.backgroundImage, this.xPos, this.yPos)
+    this.last_animation_time = new Date().getTime();
+    if(this.index > this.data[this.animation].length - 1){
+      this.index = 0;
     }
-    requestAnimationFrame(animate);
-    // if((p.time_delta+last_animation_time) > new Date().getTime()) {
-    //   return;
-    // }
-    //last_animation_time = new Date().getTime();
-    //this needs to be redone based on class
-    if(i > jsondata[p.animation].length - 1){
-      i = 0;
-    }
-    img.src = 'Penguins/' + p.animation + '/' + String(i) + '.png';
+    this.img.src = 'Penguins/' + this.animation + '/' + String(this.index) + '.png';
     context.clearRect(0, 0, canvas.width, canvas.height);
-    context.drawImage(img, p.xPos, p.yPos, jsondata[p.animation][i]['w'], jsondata[p.animation][i]['h']);
-    i++;
+    context.drawImage(
+      this.img,
+      this.xPos,
+      this.yPos,
+      this.data[this.animation][this.index]['w'],
+      this.data[this.animation][this.index]['h']
+      );
+    this.index++;
 
     // if(this.velocity[0] == 0 || this.velocity[1] == 0) {
     //   return;
@@ -70,14 +69,6 @@ class Penguin {
 }//end of Penguin Class
 
 
-var img = new Image();
-var last_animation_time = new Date().getTime();
-var i = 0;
-
-/*
-also tried this inside penguin class but kept running into errors.
-i assume due to having a sync function before creating the object.
-*/
 var jsondata = $.ajax({
   url: 'animationData.json',
   async: false,
@@ -86,10 +77,11 @@ var jsondata = $.ajax({
 const context = document.querySelector('canvas').getContext('2d', {alpha:false});
 window.addEventListener('keydown', KeyPress, false);
 window.addEventListener('keyup', function(e){
-  p.setAnimation(randomIdle());
+  p.setAnimation('idleWave');
 })
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+
 var p = new Penguin(
   xPos = 50,
   yPos = 50,
@@ -97,34 +89,15 @@ var p = new Penguin(
   time_delta = 99,
   jsondata
 );
-console.log(jsondata);
-console.log(p.data);
 
+// var p2 = new Penguin(
+//   xPos = 50,
+//   yPos = 200,
+//   distance = 10,
+//   time_delta = 99,
+//   jsondata
+// );
 
-/*
-had this in penguin class at one point but felt like it ran slower when
-it was in the class function. The screen flash i found is caused by this
-randomly picked idle. I could remove it and change it to have only one
-idle, but that would be boring.
-*/
-//remove this tbh
-function randomIdle() {
-  var idleArr = [
-    "idle",
-    // "idleBackAndForth",
-    // "idleBreathing",
-    // "idleFall",
-    // "idleLayDown",
-    // "idleLookAround",
-    // "idleLookDown",
-    // "idleLookLeft",
-    // "idleLookUp",
-    // "idleSit",
-    // "idleSpin",
-    // "idleWave"
-  ]
-  return idleArr[Math.floor(Math.random()*idleArr.length)];
-}
 function KeyPress(key) {
   switch(key.keyCode){
     //N
@@ -154,19 +127,8 @@ function KeyPress(key) {
 var penguins = [p];
 function animate() {
   requestAnimationFrame(animate);
-  if((p.time_delta+last_animation_time) > new Date().getTime()) {
-    return;
+  for(let p of penguins) {
+    p.draw();
   }
-  last_animation_time = new Date().getTime();
-  if(i > jsondata[p.animation].length - 1){
-    i = 0;
-  }
-  img.src = 'Penguins/' + p.animation + '/' + String(i) + '.png';
-  context.clearRect(0, 0, canvas.width, canvas.height);
-  context.drawImage(img, p.xPos, p.yPos, jsondata[p.animation][i]['w'], jsondata[p.animation][i]['h']);
-  i++;
-  // for(let p of penguins) {
-  //   p.draw();
-  // }
 }
 animate();

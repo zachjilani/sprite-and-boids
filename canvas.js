@@ -1,16 +1,20 @@
 class Penguin {
-  //re-edit or hard code an initial/random position
-  //json data could probably be better as well
-  constructor(xPos, yPos, distance, time_delta, data) {
+  //re-edit or hard code an initial/random position using []
+  //need to figure out the contexts/ bg image
+  constructor(xPos, yPos, distance, time_delta) {
     this.xPos = xPos;
     this.yPos = yPos;
     this.distance = distance;
     this.time_delta = time_delta;
     this.animation = 'idleWave';
-    this.data = data
     this.img = new Image();
     this.index = 0;
     this.last_animation_time = new Date().getTime();
+    this.data = $.ajax({
+      url: 'animationData.json',
+      async: false,
+      dataType: 'json'
+    }).responseJSON["TenderBud"];
 
     // this.backgroundImage = null;
     // this.context = context;
@@ -74,6 +78,7 @@ class Penguin {
       this.index = 0;
     }
     this.img.src = 'Penguins/' + this.animation + '/' + String(this.index) + '.png';
+    //need to do something with these contexts.
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.drawImage(
       this.img,
@@ -98,12 +103,6 @@ class Penguin {
 
 }//end of Penguin Class
 
-
-var jsondata = $.ajax({
-  url: 'animationData.json',
-  async: false,
-  dataType: 'json'
-}).responseJSON["TenderBud"];
 const context = document.querySelector('canvas').getContext('2d', {alpha:false});
 window.addEventListener('keydown', KeyPress, false);
 window.addEventListener('keyup', function(e){
@@ -116,8 +115,7 @@ var p = new Penguin(
   xPos = 50,
   yPos = 50,
   distance = 10,
-  time_delta = 99,
-  jsondata
+  time_delta = 99
 );
 
 function KeyPress(key) {

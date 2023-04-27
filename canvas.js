@@ -35,6 +35,33 @@ class Penguin {
     vec_a[1] = vec_a[1] + vec_b[1];
   }
 
+  move(key){
+    switch(key.keyCode){
+      //N
+      case 87:
+        this.setAnimation('walk_N');
+        this.yPos = this.yPos - this.distance;
+        break;
+      //E
+      case 68:
+        this.setAnimation('walk_E');
+        this.xPos = this.xPos + this.distance;
+        break;
+      //S
+      case 83:
+        this.setAnimation('walk_S');
+        this.yPos = this.yPos + this.distance;
+        break;
+      //W
+      case 65:
+        this.setAnimation('walk_W');
+        this.xPos = this.xPos - this.distance;
+        break;
+      default:
+        break;
+    }
+  }
+
   draw() {
     if((this.time_delta + this.last_animation_time) > new Date().getTime()) {
       return;
@@ -90,39 +117,8 @@ var p = new Penguin(
   jsondata
 );
 
-// var p2 = new Penguin(
-//   xPos = 50,
-//   yPos = 200,
-//   distance = 10,
-//   time_delta = 99,
-//   jsondata
-// );
-
 function KeyPress(key) {
-  switch(key.keyCode){
-    //N
-    case 87:
-      p.setAnimation('walk_N');
-      p.yPos = p.yPos - p.distance;
-      break;
-    //E
-    case 68:
-      p.setAnimation('walk_E');
-      p.xPos = p.xPos + p.distance;
-      break;
-    //S
-    case 83:
-      p.setAnimation('walk_S');
-      p.yPos = p.yPos + p.distance;
-      break;
-    //W
-    case 65:
-      p.setAnimation('walk_W');
-      p.xPos = p.xPos - p.distance;
-      break;
-    default:
-      break;
-  }
+  p.move(key);
 }
 var penguins = [p];
 function animate() {

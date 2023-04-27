@@ -1,10 +1,11 @@
 class Penguin {
-  constructor(xPos, yPos, distance, time_delta) {
+  constructor(xPos, yPos, distance, time_delta, data) {
     this.xPos = xPos;
     this.yPos = yPos;
     this.distance = distance;
     this.time_delta = time_delta;
     this.animation = 'idle';
+    this.data = data
 
 
     // this.last_animation_time = new Date().getTime();
@@ -93,8 +94,12 @@ var p = new Penguin(
   xPos = 50,
   yPos = 50,
   distance = 10,
-  time_delta = 99
+  time_delta = 99,
+  jsondata
 );
+console.log(jsondata);
+console.log(p.data);
+
 
 /*
 had this in penguin class at one point but felt like it ran slower when
@@ -106,17 +111,17 @@ idle, but that would be boring.
 function randomIdle() {
   var idleArr = [
     "idle",
-    "idleBackAndForth",
-    "idleBreathing",
-    "idleFall",
-    "idleLayDown",
-    "idleLookAround",
-    "idleLookDown",
-    "idleLookLeft",
-    "idleLookUp",
-    "idleSit",
-    "idleSpin",
-    "idleWave"
+    // "idleBackAndForth",
+    // "idleBreathing",
+    // "idleFall",
+    // "idleLayDown",
+    // "idleLookAround",
+    // "idleLookDown",
+    // "idleLookLeft",
+    // "idleLookUp",
+    // "idleSit",
+    // "idleSpin",
+    // "idleWave"
   ]
   return idleArr[Math.floor(Math.random()*idleArr.length)];
 }

@@ -1,4 +1,6 @@
 class Penguin {
+  //re-edit or hard code an initial/random position
+  //json data could probably be better as well
   constructor(xPos, yPos, distance, time_delta, data) {
     this.xPos = xPos;
     this.yPos = yPos;
@@ -8,16 +10,17 @@ class Penguin {
     this.data = data
     this.img = new Image();
     this.index = 0;
-
-
     this.last_animation_time = new Date().getTime();
+
     // this.backgroundImage = null;
     // this.context = context;
     // this.velocity = [1, 1];
   }
+  //figure out how to get rid of this
   setAnimation(anim) {
     this.animation = anim;
   }
+  //use vectors for position, distance, and delta.
   setPosition(x, y) {
     this.xPos = x;
     this.yPos = y;

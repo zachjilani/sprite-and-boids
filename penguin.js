@@ -1,9 +1,8 @@
 class Penguin {
   //re-edit or hard code an initial/random position using []
   //need to figure out the contexts/ bg image
-  constructor(xPos, yPos, distance, time_delta) {
-    this.xPos = xPos;
-    this.yPos = yPos;
+  constructor(position, distance, time_delta) {
+    this.position = position
     this.distance = distance;
     this.time_delta = time_delta;
     this.animation = 'idleWave';
@@ -25,9 +24,9 @@ class Penguin {
     this.animation = anim;
   }
   //use vectors for position, distance, and delta.
-  setPosition(x, y) {
-    this.xPos = x;
-    this.yPos = y;
+  setPosition(pos) {
+    this.position[0] = pos[0];
+    this.position[1] = pos[1];
   }
   setDistance(distance) {
     this.distance = distance
@@ -47,22 +46,22 @@ class Penguin {
       //N
       case 87:
         this.setAnimation('walk_N');
-        this.yPos = this.yPos - this.distance;
+        this.position[1] = this.position[1] - this.distance;
         break;
       //E
       case 68:
         this.setAnimation('walk_E');
-        this.xPos = this.xPos + this.distance;
+        this.position[0] = this.position[0] + this.distance;
         break;
       //S
       case 83:
         this.setAnimation('walk_S');
-        this.yPos = this.yPos + this.distance;
+        this.position[1] = this.position[1] + this.distance;
         break;
       //W
       case 65:
         this.setAnimation('walk_W');
-        this.xPos = this.xPos - this.distance;
+        this.position[0] = this.position[0] - this.distance;
         break;
       default:
         break;
@@ -82,8 +81,8 @@ class Penguin {
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.drawImage(
       this.img,
-      this.xPos,
-      this.yPos,
+      this.position[0],
+      this.position[1],
       this.data[this.animation][this.index]['w'],
       this.data[this.animation][this.index]['h']
       );
@@ -99,6 +98,10 @@ class Penguin {
     //     this.velocity = [0, 0];
     //     return;
     // }
+  }
+
+  edges() {
+
   }
 
 }//end of Penguin Class

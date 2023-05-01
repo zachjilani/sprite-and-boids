@@ -7,11 +7,12 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 var p = new Penguin(
-  xPos = 50,
-  yPos = 50,
+  position=[50, 50],
   distance = 10,
   time_delta = 99
 );
+
+console.log(p.position);
 
 function KeyPress(key) {
   p.move(key);

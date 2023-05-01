@@ -5,7 +5,7 @@ class Penguin {
     this.position = position
     this.distance = distance;
     this.time_delta = time_delta;
-    this.animation = 'idleWave';
+    this.animation = 'idle';
     this.img = new Image();
     this.index = 0;
     this.last_animation_time = new Date().getTime();
@@ -15,7 +15,7 @@ class Penguin {
       dataType: 'json'
     }).responseJSON["TenderBud"];
 
-    // this.backgroundImage = null;
+    this.backgroundImage = null;
     // this.context = context;
     // this.velocity = [1, 1];
   }
@@ -73,12 +73,23 @@ class Penguin {
       return;
     }
     this.last_animation_time = new Date().getTime();
+    if(this.backgroundImage != null) {
+      context.putImageData(this.backgroundImage, this.position[0], this.position[1]);
+    }
     if(this.index > this.data[this.animation].length - 1){
       this.index = 0;
     }
     this.img.src = 'Penguins/' + this.animation + '/' + String(this.index) + '.png';
     //need to do something with these contexts.
-    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    //this replaces bg image incompletely.
+    this.backgroundImage = context.getImageData(
+      this.position[0],
+      this.position[1],
+      this.data[this.animation][this.index]['w'],
+      this.data[this.animation][this.index]['h']
+      )
+    //context.clearRect(0, 0, canvas.width, canvas.height);
     context.drawImage(
       this.img,
       this.position[0],
@@ -101,7 +112,16 @@ class Penguin {
   }
 
   edges() {
-
+    if(this.position[0] > width) {
+      this.position[0] = 0;
+    }else if(this.position[0] < 0) {
+      this.position[0] = width;
+    }
+    if(this.position[1] > height) {
+      this.position[1] = 0;
+    }else if(this.position[1] < 0) {
+      this.position[1] = height;
+    }
   }
 
 }//end of Penguin Class

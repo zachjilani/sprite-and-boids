@@ -7,9 +7,7 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 var p = new Penguin(
-  context,
-  10,
-  99
+  context
 );
 
 
@@ -22,7 +20,7 @@ function KeyPress(key) {
 var penguins = [p]
 
 for(let i = 0; i < 10; i++) {
-  penguins.push(new Penguin(context, 10, 99))
+  penguins.push(new Penguin(context))
 }
 function animate() {
   requestAnimationFrame(animate);

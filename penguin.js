@@ -1,8 +1,8 @@
 class Penguin {
-  constructor(context, distance, time_delta) {
+  constructor(context) {
     this.position = [Math.floor((Math.random() * canvas.width) - 10), Math.floor((Math.random() * canvas.height) - 10)];
-    this.distance = distance;
-    this.time_delta = time_delta;
+    this.distance = 10;
+    this.time_delta = 99;
     this.animation = 'idle';
     this.img = new Image();
     this.index = 0;
@@ -85,7 +85,7 @@ class Penguin {
     this.img.src = 'Penguins/' + this.animation + '/' + String(this.index) + '.png';
 
     //this replaces bg image incompletely.
-    this.backgroundImage = context.getImageData(
+    this.backgroundImage = this.context.getImageData(
       this.position[0],
       this.position[1],
       this.data[this.animation][this.index]['w'],

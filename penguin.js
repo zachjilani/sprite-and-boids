@@ -1,8 +1,6 @@
 class Penguin {
-  //re-edit or hard code an initial/random position using []
-  //need to figure out the contexts/ bg image
-  constructor(position, distance, time_delta) {
-    this.position = position
+  constructor(context, distance, time_delta) {
+    this.position = [Math.floor((Math.random() * canvas.width) - 10), Math.floor((Math.random() * canvas.height) - 10)];
     this.distance = distance;
     this.time_delta = time_delta;
     this.animation = 'idle';
@@ -14,16 +12,16 @@ class Penguin {
       async: false,
       dataType: 'json'
     }).responseJSON["TenderBud"];
-
     this.backgroundImage = null;
-    // this.context = context;
+    this.context = context;
     // this.velocity = [1, 1];
+
+    this.velocity = [Math.floor((Math.random() * 20) - 10), Math.floor((Math.random() * 20) - 10)];
   }
   //figure out how to get rid of this
   setAnimation(anim) {
     this.animation = anim;
   }
-  //use vectors for position, distance, and delta.
   setPosition(pos) {
     this.position[0] = pos[0];
     this.position[1] = pos[1];
@@ -31,6 +29,7 @@ class Penguin {
   setDistance(distance) {
     this.distance = distance
   }
+  //this prob will change.
   setDelta(delta) {
     this.time_delta = delta;
   }
@@ -39,6 +38,10 @@ class Penguin {
     //hardcoded diag for now, later call addVector for movement
     vec_a[0] = vec_a[0] + vec_b[0];
     vec_a[1] = vec_a[1] + vec_b[1];
+  }
+
+  onEdge() {
+    this.velocity = [Math.floor((Math.random() * 20) - 10), Math.floor((Math.random() * 20) - 10)];
   }
 
   move(key){
@@ -74,13 +77,12 @@ class Penguin {
     }
     this.last_animation_time = new Date().getTime();
     if(this.backgroundImage != null) {
-      context.putImageData(this.backgroundImage, this.position[0], this.position[1]);
+      this.context.putImageData(this.backgroundImage, this.position[0], this.position[1]);
     }
     if(this.index > this.data[this.animation].length - 1){
       this.index = 0;
     }
     this.img.src = 'Penguins/' + this.animation + '/' + String(this.index) + '.png';
-    //need to do something with these contexts.
 
     //this replaces bg image incompletely.
     this.backgroundImage = context.getImageData(
@@ -89,8 +91,7 @@ class Penguin {
       this.data[this.animation][this.index]['w'],
       this.data[this.animation][this.index]['h']
       )
-    //context.clearRect(0, 0, canvas.width, canvas.height);
-    context.drawImage(
+    this.context.drawImage(
       this.img,
       this.position[0],
       this.position[1],
@@ -102,15 +103,19 @@ class Penguin {
     // if(this.velocity[0] == 0 || this.velocity[1] == 0) {
     //   return;
     // }
+    //change xpos to position vector
     // if(this.xPos < 0
     //   || this.yPos < 0
     //   || this.xPos > canvas.width
     //   || this.yPos > canvas.height) {
     //     this.velocity = [0, 0];
+    //     this.onEdge();
     //     return;
     // }
   }
 
+  //making this to see about edge control in penguin
+  //this is just onEdge()
   edges() {
     if(this.position[0] > width) {
       this.position[0] = 0;

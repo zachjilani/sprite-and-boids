@@ -17,7 +17,7 @@ var penguins = [leader]
 function animate() {
   requestAnimationFrame(animate);
   for(let p of penguins) {
-    //p.update();
+    p.update();
     p.draw();
   }
 }

@@ -36,16 +36,15 @@ class Penguin {
   // }
 
   addVector(vec_a, vec_b) {
-    //hardcoded for now, later call addVector for movement
     vec_a[0] = vec_a[0] + vec_b[0];
     vec_a[1] = vec_a[1] + vec_b[1];
   }
-  //this is incorrect as of rn. this is changing
-  //position to [NaN, NaN]. so that needs to be
-  //figured out
+ //got it, this.acceleration cannot be just []. lol
   update() {
+    console.log("position " + this.position);
+    console.log("velocity " + this.velocity);
     this.addVector(this.position, this.velocity);
-    this.addVector(this.velocity, this.acceleration);
+    //this.addVector(this.velocity, this.acceleration);
   }
 
   onEdge() {

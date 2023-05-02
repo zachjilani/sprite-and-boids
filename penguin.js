@@ -1,6 +1,10 @@
 class Penguin {
   constructor(context) {
-    this.position = [Math.floor((Math.random() * canvas.width) - 10), Math.floor((Math.random() * canvas.height) - 10)];
+    this.position = [Math.floor((Math.random() * canvas.width) - 10),
+      Math.floor((Math.random() * canvas.height) - 10)];
+    this.velocity = [Math.floor((Math.random() * 20) - 10),
+      Math.floor((Math.random() * 20) - 10)];
+    this.acceleration = [];
     this.distance = 10;
     this.time_delta = 99;
     this.animation = 'idle';
@@ -14,9 +18,6 @@ class Penguin {
     }).responseJSON["TenderBud"];
     this.backgroundImage = null;
     this.context = context;
-    // this.velocity = [1, 1];
-
-    this.velocity = [Math.floor((Math.random() * 20) - 10), Math.floor((Math.random() * 20) - 10)];
   }
   //figure out how to get rid of this
   setAnimation(anim) {
@@ -26,22 +27,30 @@ class Penguin {
     this.position[0] = pos[0];
     this.position[1] = pos[1];
   }
-  setDistance(distance) {
-    this.distance = distance
-  }
-  //this prob will change.
-  setDelta(delta) {
-    this.time_delta = delta;
-  }
+  // setDistance(distance) {
+  //   this.distance = distance
+  // }
+  // //this prob will change.
+  // setDelta(delta) {
+  //   this.time_delta = delta;
+  // }
 
   addVector(vec_a, vec_b) {
-    //hardcoded diag for now, later call addVector for movement
+    //hardcoded for now, later call addVector for movement
     vec_a[0] = vec_a[0] + vec_b[0];
     vec_a[1] = vec_a[1] + vec_b[1];
   }
+  //this is incorrect as of rn. this is changing
+  //position to [NaN, NaN]. so that needs to be
+  //figured out
+  update() {
+    this.addVector(this.position, this.velocity);
+    this.addVector(this.velocity, this.acceleration);
+  }
 
   onEdge() {
-    this.velocity = [Math.floor((Math.random() * 20) - 10), Math.floor((Math.random() * 20) - 10)];
+    this.velocity = [Math.floor((Math.random() * 20) - 10),
+      Math.floor((Math.random() * 20) - 10)];
   }
 
   move(key){
@@ -100,33 +109,22 @@ class Penguin {
       );
     this.index++;
 
-    // if(this.velocity[0] == 0 || this.velocity[1] == 0) {
-    //   return;
-    // }
-    //change xpos to position vector
-    // if(this.xPos < 0
-    //   || this.yPos < 0
-    //   || this.xPos > canvas.width
-    //   || this.yPos > canvas.height) {
-    //     this.velocity = [0, 0];
-    //     this.onEdge();
-    //     return;
-    // }
+    if(this.velocity[0] == 0 || this.velocity[1] == 0) {
+      return;
+    }
+    if(this.position[0] < 0
+      || this.position[1] < 0
+      || this.position[0] > canvas.width
+      || this.position[1] > canvas.height) {
+        this.onEdge();
+        return;
+    }
   }
+  //start of separation
+  goAway(arr) {
+    let bubble = 50
 
-  //making this to see about edge control in penguin
-  //this is just onEdge()
-  edges() {
-    if(this.position[0] > width) {
-      this.position[0] = 0;
-    }else if(this.position[0] < 0) {
-      this.position[0] = width;
-    }
-    if(this.position[1] > height) {
-      this.position[1] = 0;
-    }else if(this.position[1] < 0) {
-      this.position[1] = height;
-    }
+
   }
 
 }//end of Penguin Class

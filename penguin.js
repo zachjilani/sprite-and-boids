@@ -24,28 +24,6 @@ class Penguin {
     this.animation = anim;
   }
 
-  addVector(vec_a, vec_b) {
-    vec_a[0] = vec_a[0] + vec_b[0];
-    vec_a[1] = vec_a[1] + vec_b[1];
-  }
-
-  distance(pos_a, pos_b) {
-    let x = pos_a[0] - pos_b[0];
-    let y = pos_a[1] - pos_b[1];
-    return Math.sqrt(x * x + y * y);
-  }
-
-  divide(vector, number) {
-    for(let i of vector) {
-      i = i/number;
-    }
-  }
-
-  update() {
-    this.addVector(this.position, this.velocity);
-    this.addVector(this.velocity, this.acceleration);
-  }
-
   onEdge() {
     this.velocity = [Math.floor((Math.random() * 20) - 10),
       Math.floor((Math.random() * 20) - 10)];
@@ -121,6 +99,30 @@ class Penguin {
         return;
     }
   }
+
+  /*All code here is to deal directly with flocking algorithm.*/
+  addVector(vec_a, vec_b) {
+    vec_a[0] = vec_a[0] + vec_b[0];
+    vec_a[1] = vec_a[1] + vec_b[1];
+  }
+
+  distance(pos_a, pos_b) {
+    let x = pos_a[0] - pos_b[0];
+    let y = pos_a[1] - pos_b[1];
+    return Math.sqrt(x * x + y * y);
+  }
+
+  divide(vector, number) {
+    for(let i of vector) {
+      i = i/number;
+    }
+  }
+
+  update() {
+    this.addVector(this.position, this.velocity);
+    this.addVector(this.velocity, this.acceleration);
+  }
+
   //separation
   goAway(arr) {
     let bubble = 50

@@ -23,17 +23,6 @@ class Penguin {
   setAnimation(anim) {
     this.animation = anim;
   }
-  setPosition(pos) {
-    this.position[0] = pos[0];
-    this.position[1] = pos[1];
-  }
-  // setDistance(distance) {
-  //   this.distance = distance
-  // }
-  // //this prob will change.
-  // setDelta(delta) {
-  //   this.time_delta = delta;
-  // }
 
   addVector(vec_a, vec_b) {
     vec_a[0] = vec_a[0] + vec_b[0];

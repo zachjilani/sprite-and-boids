@@ -132,14 +132,14 @@ class Penguin {
         return;
     }
   }
-  //start of separation
+  //separation
   goAway(arr) {
     let bubble = 50
   }
-
+  //cohesion
   comeHere() {
   }
-
+  //alignment
   followMe(arr) {
     let radius = 50;
     let total = 0;

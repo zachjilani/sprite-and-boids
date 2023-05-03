@@ -41,8 +41,6 @@ class Penguin {
   }
  //got it, this.acceleration cannot be just []. lol
   update() {
-    console.log("position " + this.position);
-    console.log("velocity " + this.velocity);
     this.addVector(this.position, this.velocity);
     //this.addVector(this.velocity, this.acceleration);
   }
@@ -50,6 +48,8 @@ class Penguin {
   onEdge() {
     this.velocity = [Math.floor((Math.random() * 20) - 10),
       Math.floor((Math.random() * 20) - 10)];
+    this.position = [Math.floor((Math.random() * canvas.width) - 10),
+      Math.floor((Math.random() * canvas.height) - 10)];
   }
 
   move(key){
@@ -111,6 +111,7 @@ class Penguin {
     if(this.velocity[0] == 0 || this.velocity[1] == 0) {
       return;
     }
+    //something is wrong here
     if(this.position[0] < 0
       || this.position[1] < 0
       || this.position[0] > canvas.width

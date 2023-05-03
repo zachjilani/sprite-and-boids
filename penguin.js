@@ -106,7 +106,7 @@ class Penguin {
     vec_a[1] = vec_a[1] + vec_b[1];
   }
 
-  distance(pos_a, pos_b) {
+  howFar(pos_a, pos_b) {
     let x = pos_a[0] - pos_b[0];
     let y = pos_a[1] - pos_b[1];
     return Math.sqrt(x * x + y * y);
@@ -132,17 +132,20 @@ class Penguin {
   }
   //alignment
   followMe(arr) {
-    let radius = 50;
+    let radius = 100;
     let total = 0;
     let average = [0, 0];
     for(let other of arr) {
-      let d = this.distance(this.position, other.position);
+      let d = this.howFar(this.position, other.position);
       if(other != this && d < radius) {
         this.addVector(average, other.velocity);
         total++;
       }
     }
-    this.divide(average, total);
+    if(total > 0) {
+      this.divide(average, total);
+      this.velocity = average;
+    }
   }
 
 }//end of Penguin Class

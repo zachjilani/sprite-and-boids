@@ -11,12 +11,13 @@ function KeyPress(key) {
 }
 var leader = new Penguin(context);
 var penguins = [leader]
-// for(let i = 0; i < 10; i++) {
-//   penguins.push(new Penguin(context))
-// }
+for(let i = 0; i < 10; i++) {
+  penguins.push(new Penguin(context))
+}
 function animate() {
   requestAnimationFrame(animate);
   for(let p of penguins) {
+    p.followMe(penguins)
     p.update();
     p.draw();
   }

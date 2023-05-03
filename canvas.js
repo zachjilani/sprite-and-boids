@@ -1,7 +1,7 @@
 const context = document.querySelector('canvas').getContext('2d',{willReadFrequently: true}, {alpha:false});
 window.addEventListener('keydown', KeyPress, false);
 window.addEventListener('keyup', function(){
-  leader.setAnimation('idle');
+  leader.setAnimation('idleWave');
 })
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;

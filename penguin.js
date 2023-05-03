@@ -4,10 +4,10 @@ class Penguin {
       Math.floor((Math.random() * canvas.height) - 10)];
     this.velocity = [Math.floor((Math.random() * 20) - 10),
       Math.floor((Math.random() * 20) - 10)];
-    this.acceleration = [];
-    this.distance = 10;
+    this.acceleration = [0, 0];
+    this.distance = 1;
     this.time_delta = 99;
-    this.animation = 'idle';
+    this.animation = 'idleWave';
     this.img = new Image();
     this.index = 0;
     this.last_animation_time = new Date().getTime();
@@ -39,10 +39,22 @@ class Penguin {
     vec_a[0] = vec_a[0] + vec_b[0];
     vec_a[1] = vec_a[1] + vec_b[1];
   }
- //got it, this.acceleration cannot be just []. lol
+
+  distance(pos_a, pos_b) {
+    let x = pos_a[0] - pos_b[0];
+    let y = pos_a[1] - pos_b[1];
+    return Math.sqrt(x * x + y * y);
+  }
+
+  divide(vector, number) {
+    for(let i of vector) {
+      i = i/number;
+    }
+  }
+
   update() {
     this.addVector(this.position, this.velocity);
-    //this.addVector(this.velocity, this.acceleration);
+    this.addVector(this.velocity, this.acceleration);
   }
 
   onEdge() {
@@ -123,8 +135,23 @@ class Penguin {
   //start of separation
   goAway(arr) {
     let bubble = 50
+  }
 
+  comeHere() {
+  }
 
+  followMe(arr) {
+    let radius = 50;
+    let total = 0;
+    let average = [0, 0];
+    for(let other of arr) {
+      let d = this.distance(this.position, other.position);
+      if(other != this && d < radius) {
+        this.addVector(average, other.velocity);
+        total++;
+      }
+    }
+    this.divide(average, total);
   }
 
 }//end of Penguin Class

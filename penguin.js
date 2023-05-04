@@ -75,15 +75,15 @@ class Penguin {
     this.backgroundImage = this.context.getImageData(
       this.position[0],
       this.position[1],
-      this.data[this.animation][this.index]['w'],
-      this.data[this.animation][this.index]['h']
+      this.data[this.animation][this.index]['w']/2,
+      this.data[this.animation][this.index]['h']/2
       )
     this.context.drawImage(
       this.img,
       this.position[0],
       this.position[1],
-      this.data[this.animation][this.index]['w'],
-      this.data[this.animation][this.index]['h']
+      this.data[this.animation][this.index]['w']/2,
+      this.data[this.animation][this.index]['h']/2
       );
     this.index++;
 
@@ -101,9 +101,14 @@ class Penguin {
   }
 
   /*All code here is to deal directly with flocking algorithm.*/
-  addVector(vec_a, vec_b) {
-    vec_a[0] = vec_a[0] + vec_b[0];
-    vec_a[1] = vec_a[1] + vec_b[1];
+  addVector(vectorA, vectorB) {
+    vectorA[0] = vectorA[0] + vectorB[0];
+    vectorA[1] = vectorA[1] + vectorB[1];
+  }
+
+  subVector(vectorA, vectorB) {
+    vectorA[0] = vectorA[0] - vectorB[0];
+    vectorA[1] = vectorA[1] - vectorB[1];
   }
 
   howFar(pos_a, pos_b) {
@@ -116,6 +121,12 @@ class Penguin {
     for(let i of vector) {
       i = i/number;
     }
+  }
+
+  flock(obj) {
+    let alignment = this.followMe(obj);
+    //this.addVector(this.acceleration, alignment);
+    this.acceleration = alignment;
   }
 
   update() {
@@ -134,18 +145,19 @@ class Penguin {
   followMe(arr) {
     let radius = 100;
     let total = 0;
-    let average = [0, 0];
+    let steering = [0, 0];
     for(let other of arr) {
       let d = this.howFar(this.position, other.position);
       if(other != this && d < radius) {
-        this.addVector(average, other.velocity);
+        this.addVector(steering, other.velocity);
         total++;
       }
     }
     if(total > 0) {
-      this.divide(average, total);
-      this.velocity = average;
+      this.divide(steering, total);
+      this.subVector(steering, this.velocity);
     }
+    return steering;
   }
 
 }//end of Penguin Class

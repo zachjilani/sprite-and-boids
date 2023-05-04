@@ -17,7 +17,7 @@ for(let i = 0; i < 10; i++) {
 function animate() {
   requestAnimationFrame(animate);
   for(let p of penguins) {
-    p.followMe(penguins)
+    p.flock(penguins);
     p.update();
     p.draw();
   }

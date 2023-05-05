@@ -1,5 +1,5 @@
 class Penguin {
-  constructor(context) {
+  constructor(context,lead=false) {
     this.position = [Math.floor((Math.random() * canvas.width) - 10),
       Math.floor((Math.random() * canvas.height) - 10)];
     this.velocity = [Math.floor((Math.random() * 20) - 10),
@@ -18,7 +18,9 @@ class Penguin {
     }).responseJSON["TenderBud"];
     this.backgroundImage = null;
     this.context = context;
+    this.lead = lead;
   }
+
   //figure out how to get rid of this
   setAnimation(anim) {
     this.animation = anim;
@@ -69,21 +71,26 @@ class Penguin {
     if(this.index > this.data[this.animation].length - 1){
       this.index = 0;
     }
-    this.img.src = 'Penguins/' + this.animation + '/' + String(this.index) + '.png';
+    this.img.src = 'star.png';
+    if(this.lead == true) {
+      this.img.src = 'Penguins/' + this.animation + '/' + String(this.index) + '.png';
+    }
+    //this.img.src = 'star.png';
+    //this.img.src = 'Penguins/' + this.animation + '/' + String(this.index) + '.png';
 
     //this replaces bg image incompletely.
     this.backgroundImage = this.context.getImageData(
       this.position[0],
       this.position[1],
-      this.data[this.animation][this.index]['w']/2,
-      this.data[this.animation][this.index]['h']/2
+      this.data[this.animation][this.index]['w']/4,
+      this.data[this.animation][this.index]['h']/4
       )
     this.context.drawImage(
       this.img,
       this.position[0],
       this.position[1],
-      this.data[this.animation][this.index]['w']/2,
-      this.data[this.animation][this.index]['h']/2
+      this.data[this.animation][this.index]['w']/4,
+      this.data[this.animation][this.index]['h']/4
       );
     this.index++;
 
@@ -94,7 +101,9 @@ class Penguin {
     if(this.position[0] < 0
       || this.position[1] < 0
       || this.position[0] > canvas.width
-      || this.position[1] > canvas.height) {
+      || this.position[1] > canvas.height
+      //may not need this?
+      && this.lead == false) {
         this.onEdge();
         return;
     }

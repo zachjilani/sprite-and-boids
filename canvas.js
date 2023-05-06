@@ -11,7 +11,7 @@ canvas.height = window.innerHeight;
 // }
 // var leader = new Penguin(context, lead=true);
 var boids = []
-for(let i = 0; i < 10; i++) {
+for(let i = 0; i < 20; i++) {
   boids.push(new Boid(context))
 }
 function animate() {

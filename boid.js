@@ -57,15 +57,16 @@ class Boid {
     this.velocity = new Vec(Math.floor((Math.random() * 20) - 10), Math.floor((Math.random() * 20) - 10));
     this.acceleration = new Vec(0,0);
     this.context = context;
-    this.size = 8;
+    this.size = 15;
     this.radius = 150;
     this.maxForce = 0.04;
     this.separationDistance = 80;
+    this.randomColor = "#" + Math.floor(Math.random()*16777215).toString(16);
   }
 
   draw() {
     this.context.beginPath();
-    this.context.fillStyle = 'white';
+    this.context.fillStyle = this.randomColor;
     this.context.globalAlpha = 0.7;
     this.context.arc(this.position.x, this.position.y, this.size, 0, 2*Math.PI);
     this.context.fill();

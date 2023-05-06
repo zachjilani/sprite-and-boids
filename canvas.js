@@ -1,26 +1,28 @@
 const context = document.querySelector('canvas').getContext('2d',{willReadFrequently: true}, {alpha:false});
-window.addEventListener('keydown', KeyPress, false);
+//window.addEventListener('keydown', KeyPress, false);
 window.addEventListener('keyup', function(){
-  leader.setAnimation('idleWave');
+  //leader.setAnimation('idleWave');
 })
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-function KeyPress(key) {
-  leader.move(key);
-}
-var leader = new Penguin(context, lead=true);
-var penguins = []
-penguins.push(leader);
-for(let i = 0; i < 1; i++) {
-  penguins.push(new Penguin(context))
+// function KeyPress(key) {
+//   leader.move(key);
+// }
+// var leader = new Penguin(context, lead=true);
+var boids = []
+for(let i = 0; i < 10; i++) {
+  boids.push(new Boid(context))
 }
 function animate() {
   requestAnimationFrame(animate);
-  for(let p of penguins) {
-    p.flock(penguins);
-    p.update();
-    p.draw();
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  for(let boid of boids) {
+    boid.update();
+    boid.draw();
+    // p.flock(penguins);
+    // p.update();
+    // p.draw();
   }
 }
 animate();

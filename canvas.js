@@ -10,8 +10,9 @@ function KeyPress(key) {
   leader.move(key);
 }
 var leader = new Penguin(context, lead=true);
-var penguins = [leader]
-for(let i = 0; i < 20; i++) {
+var penguins = []
+penguins.push(leader);
+for(let i = 0; i < 1; i++) {
   penguins.push(new Penguin(context))
 }
 function animate() {

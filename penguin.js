@@ -74,8 +74,8 @@ class Penguin {
     this.img.src = 'star.png';
     if(this.lead == true) {
       this.img.src = 'Penguins/' + this.animation + '/' + String(this.index) + '.png';
+      this.position = [0,0];
     }
-    //this.img.src = 'star.png';
     //this.img.src = 'Penguins/' + this.animation + '/' + String(this.index) + '.png';
 
     //this replaces bg image incompletely.
@@ -85,6 +85,7 @@ class Penguin {
       this.data[this.animation][this.index]['w']/4,
       this.data[this.animation][this.index]['h']/4
       )
+    this.index++;
     this.context.drawImage(
       this.img,
       this.position[0],
@@ -92,7 +93,6 @@ class Penguin {
       this.data[this.animation][this.index]['w']/4,
       this.data[this.animation][this.index]['h']/4
       );
-    this.index++;
 
     if(this.velocity[0] == 0 || this.velocity[1] == 0) {
       return;
@@ -154,7 +154,7 @@ class Penguin {
   followMe(arr) {
     let radius = 100;
     let total = 0;
-    let steering = [0, 0];
+    let steering = [0,0]
     for(let other of arr) {
       let d = this.howFar(this.position, other.position);
       if(other != this && d < radius) {

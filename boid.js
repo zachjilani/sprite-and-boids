@@ -54,11 +54,10 @@ class Vec {
 class Boid {
   //need to maybe clean this up and remove context since
   //im taking everything with parent here.
-  constructor(upper, context) {
+  constructor(upper) {
     this.position = new Vec(Math.floor((Math.random() * canvas.width) - 10), Math.floor((Math.random() * canvas.height) - 10));
     this.velocity = new Vec(Math.floor((Math.random() * 20) - 10), Math.floor((Math.random() * 20) - 10));
     this.acceleration = new Vec(0,0);
-    this.context = context;
     this.size = 15;
     this.radius = 150;
     this.maxForce = 0.04;
@@ -68,11 +67,11 @@ class Boid {
   }
 
   draw() {
-    this.context.beginPath();
-    this.context.fillStyle = this.randomColor;
-    this.context.globalAlpha = 0.6;
-    this.context.arc(this.position.x, this.position.y, this.size, 0, 2*Math.PI);
-    this.context.fill();
+    this.upper.context.beginPath();
+    this.upper.context.fillStyle = this.randomColor;
+    this.upper.context.globalAlpha = 0.6;
+    this.upper.context.arc(this.position.x, this.position.y, this.size, 0, 2*Math.PI);
+    this.upper.context.fill();
   }
 
   update() {
@@ -103,7 +102,7 @@ class Boid {
     if(total > 0) {
       sum = sum.div(new Vec(count, count));
       sum = sum.norm();
-      sum = sum.mul(new Vec(/*need to put something here*/))
+      sum = sum.mul(new Vec())
     }
 
   }

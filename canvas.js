@@ -1,4 +1,4 @@
-const context = document.querySelector('canvas').getContext('2d',{willReadFrequently: true}, {alpha:false});
+var context = document.querySelector('canvas').getContext('2d',{willReadFrequently: true}, {alpha:false});
 //window.addEventListener('keydown', KeyPress, false);
 window.addEventListener('keyup', function(){
   //leader.setAnimation('idleWave');
@@ -12,7 +12,7 @@ canvas.height = window.innerHeight;
 // var leader = new Penguin(context, lead=true);
 var boids = []
 for(let i = 0; i < 20; i++) {
-  boids.push(new Boid(this, context))
+  boids.push(new Boid(this))
 }
 function animate() {
   requestAnimationFrame(animate);

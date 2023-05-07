@@ -30,9 +30,9 @@ class Vec {
     return Math.sqrt((this.x * this.x) + (this.y * this.y));
   }
 
-  norm(vec) {
-    var mag = this.mag;
-    return new Vec(vec.x/mag, vec.y/mag);
+  norm() {
+    var mag = this.mag();
+    return new Vec(this.x/mag, this.y/mag);
   }
 
   dist(vec) {
@@ -43,24 +43,24 @@ class Vec {
   lim(limit) {
     var vec;
     if(this.mag() > limit) {
-      vec = this.norm.mul(new Vec(limit, limit));
+      vec = this.norm().mul(new Vec(limit, limit));
     }else {
-      v = this;
+      vec = this;
     }
-    return v;
+    return vec;
   }
 }//end of Vec class
 
 class Boid {
-  //need to maybe clean this up and remove context since
-  //im taking everything with parent here.
   constructor(upper) {
-    this.position = new Vec(Math.floor((Math.random() * canvas.width) - 10), Math.floor((Math.random() * canvas.height) - 10));
-    this.velocity = new Vec(Math.floor((Math.random() * 20) - 10), Math.floor((Math.random() * 20) - 10));
+    this.position = new Vec(Math.floor((Math.random() * canvas.width + 1)), Math.floor((Math.random() * canvas.height + 1)));
+    this.velocity = new Vec(Math.floor((Math.random() * 11) - 5), Math.floor((Math.random() * 11) - 5));
     this.acceleration = new Vec(0,0);
-    this.size = 15;
-    this.radius = 150;
-    this.maxForce = 0.04;
+    //this.size = 6;
+    //min size is 6, max is 12
+    this.size = Math.floor(Math.random() * (12 - 6 + 1) + 6)
+    this.radius = 130;
+    this.maxForce = 0.02;
     this.separationDistance = 80;
     this.randomColor = "#" + Math.floor(Math.random()*16777215).toString(16);
     this.upper = upper;
@@ -75,6 +75,7 @@ class Boid {
   }
 
   update() {
+    this.force(this.alignment());
     this.position = this.position.add(this.velocity);
     this.velocity = this.velocity.add(this.acceleration);
     this.edges();
@@ -100,11 +101,21 @@ class Boid {
       }
     }
     if(total > 0) {
-      sum = sum.div(new Vec(count, count));
+      sum = sum.div(new Vec(total, total));
       sum = sum.norm();
-      sum = sum.mul(new Vec())
-    }
+      //hardcoded vector to multiply the sum with for now.
+      sum = sum.mul(new Vec(3, 3));
 
+      var steering = sum.sub(this.velocity);
+      steering = steering.lim(this.maxForce);
+      return steering;
+    }else {
+      return sum;
+    }
+  }
+
+  force(f) {
+    this.acceleration = this.acceleration.add(f.div(new Vec(this.size, this.size)));
   }
 
   edges() {
@@ -113,10 +124,6 @@ class Boid {
     if(this.position.x > canvas.width) {this.position.x = 0};
     if(this.position.y > canvas.height) {this.position.y = 0};
   }
-
-  // force(force) {
-  //   this.acceleration = this.acceleration.add(force.div())
-  // }
 
   seek() {
   }

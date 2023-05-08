@@ -156,13 +156,4 @@ class Boid {
       this.position.y = 0
     }
   }
-
-  seek(vec) {
-    var desired = vec.sub(this.velocity);
-    desired = desired.norm().mul(new Vec(this.speed, this.speed));
-
-    var steering = desired.sub(this.velocity);
-    steering = steering.lim(this.maxForce);
-    return steering;
-  }
 }//end Boids class

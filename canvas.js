@@ -3,15 +3,18 @@ var context = document.querySelector('canvas').getContext('2d',{willReadFrequent
 window.addEventListener('keyup', function(){
   //leader.setAnimation('idleWave');
 })
+
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-var boids = []
+var p = new Penguin(context, true);
+var boids = [];
 for(let i = 0; i < 30; i++) {
   boids.push(new Boid(this))
 }
 function animate() {
   requestAnimationFrame(animate);
+  //p.draw();
   context.clearRect(0, 0, canvas.width, canvas.height);
   for(let boid of boids) {
     boid.alignment();

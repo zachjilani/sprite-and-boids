@@ -76,6 +76,7 @@ class Boid {
   }
 
   update() {
+    this.force(this.separation());
     this.force(this.alignment());
     this.force(this.cohesion());
 
@@ -112,10 +113,32 @@ class Boid {
   }
 
   separation() {
+    var steering = new Vec(0, 0);
+    var total = 0;
+
+    for(let i = 0; i < this.upper.boids.length; i++) {
+      let d = this.position.dist(this.upper.boids[i].position) - this.size;
+      if(d > 0 && d < this.separationDistance) {
+        var difference = this.position.sub(this.upper.boids[i].position);
+        difference = difference.norm();
+        difference = difference.div(new Vec(d, d));
+        steering = steering.add(difference);
+        total++;
+      }
+    }
+    if(total > 0) {
+      steering = steering.div(new Vec(total, total));
+      steering = steering.norm();
+      steering = steering.mul(new Vec(this.speed, this.speed));
+      steering = steering.sub(this.velocity);
+      steering = steering.lim(this.maxForce);
+    }
+    return steering;
   }
 
   alignment() {
     var sum = new Vec(0, 0);
+    var steering = new Vec(0, 0);
     var total = 0;
 
     for(let i = 0; i < this.upper.boids.length; i++) {
@@ -129,13 +152,10 @@ class Boid {
       sum = sum.div(new Vec(total, total));
       sum = sum.norm();
       sum = sum.mul(new Vec(this.speed, this.speed));
-
-      var steering = sum.sub(this.velocity);
+      steering = sum.sub(this.velocity);
       steering = steering.lim(this.maxForce);
-      return steering;
-    }else {
-      return sum;
     }
+    return steering;
   }
 
   force(f) {

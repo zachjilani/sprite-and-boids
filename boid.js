@@ -77,6 +77,7 @@ class Boid {
 
   update() {
     this.force(this.alignment());
+    this.force(this.cohesion());
 
     this.velocity = this.velocity.add(this.acceleration);
     this.velocity = this.velocity.lim(this.speed);
@@ -89,15 +90,32 @@ class Boid {
   }
 
   cohesion() {
-    var sum = new Vec(0,0);
-    var count = 0;
+    var sum = new Vec(0, 0);
+    var steering = new Vec(0, 0);
+    var total = 0;
+
+    for(let i = 0; i < this.upper.boids.length; i++) {
+      let d = this.position.dist(this.upper.boids[i].position);
+      if(d > 0 && d < this.radius) {
+        sum = sum.add(this.upper.boids[i].velocity);
+        total++;
+      }
+    }
+    if(total > 0) {
+      sum = sum.div(new Vec(total, total));
+      var desired = sum.sub(this.velocity);
+      desired = desired.norm().mul(new Vec(this.speed, this.speed));
+      steering = desired.sub(this.velocity);
+      steering = steering.lim(this.maxForce);
+    }
+    return steering;
   }
 
   separation() {
   }
 
   alignment() {
-    var sum = new Vec(0,0);
+    var sum = new Vec(0, 0);
     var total = 0;
 
     for(let i = 0; i < this.upper.boids.length; i++) {
@@ -139,6 +157,12 @@ class Boid {
     }
   }
 
-  seek() {
+  seek(vec) {
+    var desired = vec.sub(this.velocity);
+    desired = desired.norm().mul(new Vec(this.speed, this.speed));
+
+    var steering = desired.sub(this.velocity);
+    steering = steering.lim(this.maxForce);
+    return steering;
   }
 }//end Boids class

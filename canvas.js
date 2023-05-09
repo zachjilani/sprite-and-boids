@@ -1,12 +1,10 @@
 var context = document.querySelector('canvas').getContext('2d',{willReadFrequently: true}, {alpha:false});
-window.addEventListener('keydown', KeyPress, false);
+window.addEventListener('keydown', function(key){
+  p.move(key)
+}, false);
 window.addEventListener('keyup', function(){
   p.setAnimation('idle');
 })
-
-function KeyPress(key) {
-  p.move(key);
-}
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;

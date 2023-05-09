@@ -76,9 +76,11 @@ class Boid {
   }
 
   update() {
+    console.log(this.upper);
     this.force(this.separation());
     this.force(this.alignment());
     this.force(this.cohesion());
+    //this.force(this.penguin());
 
     this.velocity = this.velocity.add(this.acceleration);
     this.velocity = this.velocity.lim(this.speed);
@@ -89,6 +91,26 @@ class Boid {
 
     this.edges();
   }
+
+  find(target) {
+    var desired = target.sub(this.position);
+    desired = desired.norm();
+    desired = desired.mul(this.speed, this.speed);
+
+    var steering = desired.sub(this.velocity);
+    steering = steering.lim(this.maxForce);
+    return steering;
+  }
+  //something here is messed up.
+  //need to think of how boids flock to
+  //position of penguin
+  // penguin() {
+  //   if(this.position.dist(this.upper.penguinPos) < this.radius) {
+  //     return this.find(this.upper.penguinPos);
+  //   }else {
+  //     return new Vec(0, 0);
+  //   }
+  // }
 
   cohesion() {
     var sum = new Vec(0, 0);

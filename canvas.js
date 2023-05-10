@@ -4,7 +4,9 @@ window.addEventListener('keydown', function(key){
 }, false);
 window.addEventListener('keyup', function(){
   p.setAnimation('idle');
-})
+  this.penguinPos = p.position;
+});
+
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;

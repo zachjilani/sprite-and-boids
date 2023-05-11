@@ -62,7 +62,7 @@ class Boid {
     this.radius = 140;
     this.maxForce = 0.04;
     this.speed = 2;
-    this.separationDistance = 70;
+    this.separationDistance = 80;
     this.randomColor = "#" + Math.floor(Math.random()*16777215).toString(16);
     this.upper = upper;
   }
@@ -80,7 +80,6 @@ class Boid {
     this.force(this.separation());
     this.force(this.alignment());
     this.force(this.cohesion());
-    //need to work on this here with force and acceleration for penguin
     var findHim = this.penguin();
     this.force(findHim);
 
@@ -101,13 +100,13 @@ class Boid {
     desired = desired.mul(new Vec(this.speed, this.speed));
 
     var steering = desired.sub(this.velocity);
-    steering = steering.lim(this.maxForce);
+    steering = steering.lim(0.5);
     return steering;
   }
 
   penguin() {
-    if(this.position.dist(this.upper.p.position) < this.radius) {
-      return this.find(this.upper.p.position);
+    if(this.position.dist(this.upper.penguinPos) < this.radius) {
+      return this.find(this.upper.penguinPos);
     }else {
       return new Vec(0, 0);
     }

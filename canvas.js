@@ -7,7 +7,7 @@ window.addEventListener('keyup', function(){
   this.penguinPos = p.position;
 });
 
-
+this.penguinPos = 0
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 

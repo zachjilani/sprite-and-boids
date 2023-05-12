@@ -78,8 +78,8 @@ class Boid {
   }
 
   update() {
-    this.force(this.separation());
     this.force(this.alignment());
+    this.force(this.separation());
     this.force(this.cohesion());
     this.force(this.penguin());
 

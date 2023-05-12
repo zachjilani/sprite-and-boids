@@ -24,7 +24,6 @@ function animate() {
   p.draw();
   p.edges();
   for(let boid of boids) {
-    boid.alignment();
     boid.update();
     boid.draw();
   }

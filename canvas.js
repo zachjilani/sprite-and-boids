@@ -15,7 +15,7 @@ canvas.height = window.innerHeight;
 var p = new Penguin(this);
 var boids = [];
 
-for(let i = 0; i < 30; i++) {
+for(let i = 0; i < 40; i++) {
   boids.push(new Boid(this))
 }
 function animate() {

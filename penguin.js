@@ -19,6 +19,7 @@ class Penguin {
     var newImg = new Image();
     newImg.src = 'Penguins/' + this.animation + '/' + String(Math.floor(this.index)) + '.png';
     this.upper.context.drawImage(newImg, this.position.x, this.position.y, 80, 80);
+    //doing this makes it look like i lower the framerate when in reality it just the same frame 5 times
     this.index = this.index + 0.2;
   }
 

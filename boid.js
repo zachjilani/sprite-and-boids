@@ -59,6 +59,7 @@ class Boid {
     //min size is 6, max is 12
     this.size = Math.floor(Math.random() * (12 - 6 + 1) + 6)
     //seeing radius
+    this.penguinRadius = 90;
     this.radius = 140;
     this.maxForce = 0.04;
     this.speed = 2;
@@ -80,8 +81,7 @@ class Boid {
     this.force(this.separation());
     this.force(this.alignment());
     this.force(this.cohesion());
-    var findHim = this.penguin();
-    this.force(findHim);
+    this.force(this.penguin());
 
 
     this.velocity = this.velocity.add(this.acceleration);
@@ -105,8 +105,10 @@ class Boid {
   }
 
   penguin() {
-    if(this.position.dist(this.upper.penguinPos) < this.radius) {
-      return this.find(this.upper.penguinPos);
+    if(penguinPos != 0 && this.position.dist(this.upper.penguinPos) < this.penguinRadius) {
+      //wanting boids to be above the middle of penguin head
+      var center = new Vec(this.upper.penguinPos.x + 40, this.upper.penguinPos.y - 10)
+      return this.find(center);
     }else {
       return new Vec(0, 0);
     }

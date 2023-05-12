@@ -2,13 +2,13 @@
 
 This program demonstrates boids flocking algorithm. How this algorithm works is that each boid follows three rules.
 
-- 1. Coherence
+- Coherence
 Each boid flies towards the the other boids. But they don't just immediately fly directly at each other. They gradually steer towards each other.
 
-- 2. Separation
+- Separation
 Each boid also tries to avoid running into the other boids. If it gets too close to another boid it will steer away from it.
 
-- 3. Alignment
+- Alignment
 Finally, each boid tries to match the vector (speed and direction) of the other boids around it.
 
 ---

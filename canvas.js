@@ -12,7 +12,7 @@ this.penguinPos = 0
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-var p = new Penguin(this);
+//var p = new Penguin(this);
 var boids = [];
 
 for(let i = 0; i < 40; i++) {

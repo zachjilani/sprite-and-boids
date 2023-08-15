@@ -1,3 +1,7 @@
+"""
+This is to get around CORS policy
+"""
+
 import http.server
 import socketserver
 
@@ -13,5 +17,5 @@ handler_object = MyHttpRequestHandler
 PORT = 3000
 my_server = socketserver.TCPServer(("", PORT), handler_object)
 
-# Star the server
+# Start the server
 my_server.serve_forever()

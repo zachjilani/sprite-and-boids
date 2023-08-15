@@ -19,7 +19,7 @@ canvas.height = window.innerHeight;
 //var p = new Penguin(this);
 var boids = [];
 
-//need to have a reference to the boid array, and animate function. so Boid class takes a reference to this to use later.
+//need to have a reference to the boid array, and context. so Boid class takes a reference to this to use later.
 //creating array for 40 boids
 for(let i = 0; i < 40; i++) {
   boids.push(new Boid(this))
